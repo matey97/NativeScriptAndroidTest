@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { SqliteService } from "./sqlite/sqlite.service";
 import { Coordinates } from "./model/Coordinates";
+import { Alarm } from "./alarm.android";
 
 @Component({
     selector: "ns-app",
@@ -17,6 +18,8 @@ export class AppComponent {
                 )
             }
         );
+        const alarm = new Alarm();
+        alarm.schedule();
     }
 
 }

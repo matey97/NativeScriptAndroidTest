@@ -16,7 +16,6 @@ export class SqliteService {
 
   public registerMe(observer) {
     this.observers = this.observers.concat(observer);
-    console.log("Registered");
   }
 
   public getDBConnection() {
@@ -37,6 +36,10 @@ export class SqliteService {
     return db.get("SELECT COUNT(*) FROM coords");
   }
 
+  public getCoords(db) {
+    return db.all("SELECT * FROM coords ORDER BY timestamp ASC");
+  }
+
   public insertData(db, coords: Coordinates) {
     return db.execSQL("INSERT INTO coords(latitude, longitude, accuracy, timestamp)  values (?, ?, ?, ?)",
       [coords.latitude, coords.longitude, coords.accuracy, coords.timestamp]).then(
@@ -46,7 +49,6 @@ export class SqliteService {
   }
 
   public notifyObservers() {
-    console.log("Observers to notify -->",this.observers.length);
     this.observers.forEach(observer => observer.updateCounter())
   }
 
